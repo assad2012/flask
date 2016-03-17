@@ -421,9 +421,8 @@ class Flask(_PackageBoundObject):
         #: A dictionary with lists of functions that should be called after
         #: each request.  The key of the dictionary is the name of the blueprint
         #: this function is active for, ``None`` for all requests.  This can for
-        #: example be used to open database connections or getting hold of the
-        #: currently logged in user.  To register a function here, use the
-        #: :meth:`after_request` decorator.
+        #: example be used to close database connections. To register a function
+        #: here, use the :meth:`after_request` decorator.
         self.after_request_funcs = {}
 
         #: A dictionary with lists of functions that are called after
@@ -791,8 +790,7 @@ class Flask(_PackageBoundObject):
 
         It is not recommended to use this function for development with
         automatic reloading as this is badly supported.  Instead you should
-        be using the :command:`flask` command line script's ``runserver``
-        support.
+        be using the :command:`flask` command line script's ``run`` support.
 
         .. admonition:: Keep in Mind
 
@@ -833,6 +831,7 @@ class Flask(_PackageBoundObject):
             self.debug = bool(debug)
         options.setdefault('use_reloader', self.debug)
         options.setdefault('use_debugger', self.debug)
+        options.setdefault('passthrough_errors', True)
         try:
             run_simple(host, port, self, **options)
         finally:

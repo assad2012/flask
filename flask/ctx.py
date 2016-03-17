@@ -9,8 +9,6 @@
     :license: BSD, see LICENSE for more details.
 """
 
-from __future__ import with_statement
-
 import sys
 from functools import update_wrapper
 
@@ -38,7 +36,7 @@ class _AppCtxGlobals(object):
             return self.__dict__.pop(name, default)
 
     def setdefault(self, name, default=None):
-        self.__dict__.setdefault(name, default)
+        return self.__dict__.setdefault(name, default)
 
     def __contains__(self, item):
         return item in self.__dict__
